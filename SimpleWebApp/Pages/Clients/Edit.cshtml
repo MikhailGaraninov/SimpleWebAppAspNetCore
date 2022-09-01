@@ -40,6 +40,12 @@
             <input type="text" class="form-control" name="address" value="@Model.clientInfo.address"> 
         </div>
     </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Citizen</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="citizen" value="@Model.clientInfo.citizen"> 
+        </div>
+    </div>
 
 @if (Model.successMessage.Length > 0) // if error exist show message with button for close error message
 {

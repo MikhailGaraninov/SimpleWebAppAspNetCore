@@ -19,9 +19,10 @@ namespace SimpleWebApp.Pages.Clients
             clientInfo.email = Request.Form["email"];
             clientInfo.phone = Request.Form["phone"];
             clientInfo.address = Request.Form["address"];
+            clientInfo.citizen = Request.Form["citizen"];
 
             if (clientInfo.name.Length == 0 || clientInfo.email.Length == 0 ||
-               clientInfo.phone.Length == 0 || clientInfo.address.Length == 0)
+               clientInfo.phone.Length == 0 || clientInfo.address.Length == 0 || clientInfo.citizen.Length == 0)
             {
                 errorMessage = "All fields are required";
                 return;
@@ -35,8 +36,8 @@ namespace SimpleWebApp.Pages.Clients
                 using (SqlConnection connection = new SqlConnection(connectionString)) // creating SQL connection
                 {
                     connection.Open(); //open the connection
-                    String sql = "INSERT INTO clients " + "(name, email, phone,address) VALUES " + 
-                        "(@name, @email, @phone, @address);"; // add new client in clients table + add name, ... address values + replace parameters from the form
+                    String sql = "INSERT INTO clients " + "(name, email, phone,address, citizen) VALUES " + 
+                        "(@name, @email, @phone, @address, @citizen);"; // add new client in clients table + add name, ... address values + replace parameters from the form
                     using (SqlCommand command = new SqlCommand(sql, connection)) // allows to execute sql query
                     {
 
@@ -44,6 +45,7 @@ namespace SimpleWebApp.Pages.Clients
                         command.Parameters.AddWithValue("@email", clientInfo.email);
                         command.Parameters.AddWithValue("@phone", clientInfo.phone);
                         command.Parameters.AddWithValue("@address", clientInfo.address);
+                        command.Parameters.AddWithValue("@citizen", clientInfo.citizen);
 
                         command.ExecuteNonQuery(); //execute the sql query
                         // add this object into list
@@ -56,7 +58,7 @@ namespace SimpleWebApp.Pages.Clients
                 errorMessage = ex.Message;
                 return;
             }
-            clientInfo.name = ""; clientInfo.email = ""; clientInfo.phone = ""; clientInfo.address = "";
+            clientInfo.name = ""; clientInfo.email = ""; clientInfo.phone = ""; clientInfo.address = ""; clientInfo.citizen = "";
             successMessage = "new client added correctly";
 
             Response.Redirect("/Clients/Index"); //redirect to the clients list
