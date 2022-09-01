@@ -30,6 +30,7 @@ namespace SimpleWebApp.Pages.Clients
                                 clientInfo.phone = "" + reader.GetString(3);
                                 clientInfo.address = "" + reader.GetString(4);
                                 clientInfo.created_at = "" + reader.GetDateTime(5).ToString();
+                                clientInfo.citizen = "" + reader.GetString(6);
 
                                 listClients.Add(clientInfo); // add this object into list
                             }
@@ -52,6 +53,7 @@ namespace SimpleWebApp.Pages.Clients
         public string phone;
         public string address;
         public string created_at;
+        public string citizen;
 
 
     }

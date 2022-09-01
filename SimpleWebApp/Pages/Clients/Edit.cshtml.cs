@@ -33,6 +33,7 @@ namespace SimpleWebApp.Pages.Clients
                                 clientInfo.email = reader.GetString(2);
                                 clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
+                                clientInfo.citizen = reader.GetString(6);
                             }
                         }
                     }
@@ -52,10 +53,11 @@ namespace SimpleWebApp.Pages.Clients
             clientInfo.email = Request.Form["email"];
             clientInfo.phone = Request.Form["phone"];
             clientInfo.address = Request.Form["address"];
+            clientInfo.citizen = Request.Form["citizen"];
 
 
             if (clientInfo.name.Length == 0 || clientInfo.email.Length == 0 ||
-              clientInfo.phone.Length == 0 || clientInfo.address.Length == 0)
+              clientInfo.phone.Length == 0 || clientInfo.address.Length == 0 || clientInfo.citizen.Length == 0)
             {
                 errorMessage = "All fields are required";
                 return;
@@ -69,7 +71,7 @@ namespace SimpleWebApp.Pages.Clients
                 {
                     connection.Open(); //open the connection
                     String sql = "UPDATE clients " + 
-                        "SET name=@name, email=@email, phone=@phone, address=@address" + " WHERE id=@id"; // update clients using @parameters
+                        "SET name=@name, email=@email, phone=@phone, address=@address, citizen=@citizen" + " WHERE id=@id"; // update clients using @parameters
 
                     using (SqlCommand command = new SqlCommand(sql, connection)) // allows to execute SQL query
                     {
@@ -78,6 +80,7 @@ namespace SimpleWebApp.Pages.Clients
                         command.Parameters.AddWithValue("@phone", clientInfo.phone);
                         command.Parameters.AddWithValue("@address", clientInfo.address);
                         command.Parameters.AddWithValue("@id", clientInfo.id);
+                        command.Parameters.AddWithValue("@citizen", clientInfo.citizen);
 
                         command.ExecuteNonQuery(); //execute the sql query
                     }
