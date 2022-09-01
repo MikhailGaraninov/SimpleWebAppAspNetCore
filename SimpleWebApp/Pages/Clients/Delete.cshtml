@@ -1,0 +1,30 @@
+﻿@page
+@using System.Data.SqlClient;
+@{
+
+
+    try
+    {
+        String id = Request.Query["id"];
+
+        String connectionString = "Data Source=DESKTOP-SCP0OR9\\SQLEXPRESS;Initial Catalog=SimpleWebApp;Integrated Security=True"; //try to connect to database using connectionString
+
+        using (SqlConnection connection = new SqlConnection(connectionString)) // creating SQL connection
+        {
+            connection.Open(); //open the connection
+            String sql = "DELETE FROM clients WHERE id=@id"; // selected client with the corresponding id what we have received from request
+            using (SqlCommand command = new SqlCommand(sql, connection)) // allows to execute SQL query
+            {
+                command.Parameters.AddWithValue("@id", id); //have to replace @id parameter with id what be get from request on code line 14
+
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Exception: " + ex.ToString()); //show exception message
+    }
+
+    Response.Redirect("/Clients/Index");
+}
